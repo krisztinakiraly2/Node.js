@@ -15,28 +15,24 @@
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
-    <nav class="navbar border-bottom" data-bs-theme="dark" style="background-color: #515663;">
-      
+    <nav class="navbar border-bottom" data-bs-theme="dark">
       <div class="container-fluid justify-content-start mynavbar">
-        
-        <button class="btn toggle-icon" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
-          <i class="fa-solid fa-bars"></i>
-        </button>
+          <button class="btn toggle-icon" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+            <i class="fa-solid fa-bars"></i>
+          </button>
 
-        <a class="navbar-brand" href="/index.html">
-          <img src="/Pictures/cat.png" alt="Logo" width="26" height="28" class="d-inline-block align-text-top">
-          <span class="ms-2" style="color: #F1F1F1;">My website</span>
-        </a>
-        
+          <a class="navbar-brand" href="/index.html">
+              <img src="/Pictures/cat.png" alt="Logo" width="26" height="28" class="d-inline-block align-text-top">
+              <span class="ms-2" style="color: #F1F1F1;">My website</span>
+          </a>
       </div>
-
     </nav>
 
-    <div class="container text-center mytable">
-      <table>
+    <div class="container text-center content">
+      <table class="table">
 
-        <div class="row header">
-          <div class="col-lg-3">
+        <thead class="row header mytable" style="border: none;">
+          <th class="col-lg-3 myth" style="border: none;">
 
             <a href="#">
               <i class="fa-solid fa-chevron-left arrows"></i>
@@ -47,27 +43,117 @@
             </a>
 
             Sept 2 - Sept 9
-            
-            <a href="#">
-              <i class="fa-solid fa-chevron-down arrows"></i>
-            </a>
-          </div>
+          </th>
 
-          <div class="col-lg-9"></div>
-        </div>
+          <th class="col-lg-9 myth" style="border: none;"></th>
+        </thead>
+        
+        <tbody class="table">
+          <tr class="row myrow mybottomborder">
+            <td class="col-lg-3 myth myrightborder">Projects</td>
+            <td class="col-lg-1 myth">Monday</td>
+            <td class="col-lg-1 myth">Tuesday</td>
+            <td class="col-lg-1 myth">Wednesday</td>
+            <td class="col-lg-1 myth">Thursday</td>
+            <td class="col-lg-1 myth">Friday</td>
+            <td class="col-lg-1 myth">Saturday</td>
+            <td class="col-lg-1 myth myrightborder">Sunday</td>
+            <td class="col-lg-2 myth">Total</td>
+          </tr>
 
-        <div class="row">
-          <div class="col-lg-1">Projects</div>
-          <div class="col-lg-1">Monday</div>
-          <div class="col-lg-1">Tuesday</div>
-          <div class="col-lg-1">Wednesday</div>
-          <div class="col-lg-1">Thursday</div>
-          <div class="col-lg-1">Friday</div>
-          <div class="col-lg-1">Saturday</div>
-          <div class="col-lg-1">Sunday</div>
-          <div class="col-lg-1">Total</div>
-        </div>
+          <tr class="row myrow">
+            <td class="col-lg-3 myth myrightborder" style="border-bottom: none;">
+              <a href="#" class="myth">
+                <i class="fa-solid fa-sort-down"></i>
+              </a>
+              My important projects
+            </td>
+            <td class="col-lg-1 myth" style="border: none;">-</td>
+            <td class="col-lg-1 myth" style="border: none;">4h 25m</td>
+            <td class="col-lg-1 myth" style="border: none;">-</td>
+            <td class="col-lg-1 myth" style="border: none;">6h 42m</td>
+            <td class="col-lg-1 myth" style="border: none;">-</td>
+            <td class="col-lg-1 myth" style="border: none;">-</td>
+            <td class="col-lg-1 myth myrightborder" style="border-bottom: none;">1h 5m</td>
+            <td class="col-lg-2 myth" style="border: none;">12h 12m</td>
+          </tr>
 
+          <tr class="row myrow mybottomborder">
+            <td class="col-lg-3 myth myrightborder"></td>
+            <td class="col-lg-1 myth"></td>
+            <td class="col-lg-1 myth"></td>
+            <td class="col-lg-1 myth"></td>
+            <td class="col-lg-1 myth"></td>
+            <td class="col-lg-1 myth"></td>
+            <td class="col-lg-1 myth"></td>
+            <td class="col-lg-1 myth myrightborder"></td>
+            <td class="col-lg-2 myth"></td>
+          </tr>
+
+          <tr class="row myrow mybottomborder">
+            <td class="col-lg-3 mytd myrightborder mytext">
+              <img src="/Pictures/timer.png" alt="Logo" width="18" height="20" class="d-inline-block align-text-top timer">
+              10:30 - 14:55
+              <a href="#" class="note">
+                <i class="fa-solid fa-message"></i>
+              </a>
+            </td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder">4h 25m</td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-2 mytd text-end">
+              <a href="#" class="mytd">
+                <i class="fa-solid fa-ellipsis"></i>
+              </a>
+            </td>
+          </tr>
+
+          <tr class="row myrow mybottomborder">
+            <td class="col-lg-3 mytd myrightborder mytext">
+              <img src="/Pictures/timer.png" alt="Logo" width="18" height="20" class="d-inline-block align-text-top timer">
+              10:00 - 16:42
+            </td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder">6h 42m</td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-2 mytd text-end">
+              <a href="#" class="mytd">
+                <i class="fa-solid fa-ellipsis"></i>
+              </a>
+            </td>
+          </tr>
+
+          <tr class="row myrow mybottomborder">
+            <td class="col-lg-3 mytd myrightborder mytext">
+              <img src="/Pictures/timer.png" alt="Logo" width="18" height="20" class="d-inline-block align-text-top timer">
+              13:05 - 14:10
+              <a href="#" class="note">
+                <i class="fa-solid fa-message"></i>
+              </a>
+            </td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder"></td>
+            <td class="col-lg-1 mytd myrightborder">1h 5m</td>
+            <td class="col-lg-2 mytd text-end">
+              <a href="#" class="mytd">
+                <i class="fa-solid fa-ellipsis"></i>
+              </a>
+            </td>
+          </tr>
+
+        </tbody>
       </table>
     </div>
     
@@ -88,16 +174,66 @@
   </div>
 
   <style>
-    .row
+    .mybottomborder 
     {
-      margin-top: 30px;
+      border-bottom: 1px solid #959FAB !important;
+      border-color: #959FAB !important;
+    }
+
+    .myrightborder
+    {
+      border-right: 1px solid #959FAB !important;
+      border-color: #959FAB !important;
+    }
+
+    .myth
+    {
+      background-color: #2A2E34 !important;
+    }
+
+    .mytext
+    {
+      color: #959FAB !important;
+    }
+
+    .note
+    {
+      background-color: #1E2024 !important;
+      color: #959FAB !important;
+      margin-top: 5px !important; 
+    }
+
+    .timer
+    {
+      background-color: #1E2024 !important;
+      padding-left: 0px !important; 
+      padding-right: 0px !important; 
+      padding-top: 0px !important; 
+      padding-bottom: 0px !important; 
+      margin-top: 3px !important; 
+      margin-bottom: 0px !important; 
+      margin-left: 30px !important; 
+      margin-right: 3px !important;
+    }
+
+    .mytd
+    {
+      background-color: #1E2024 !important;
+    }
+
+    .myrow
+    {
+      margin-left: 13px;
+      text-align: left;
     }
 
     .mytable
     {
       color: #f1f1f1;
       font-size: 20px !important;
-
+      margin-top: 30px;
+      margin-bottom: 30px;
+      margin-left: 0px;
     }
 
     a
@@ -120,6 +256,23 @@
     {
       padding-left: 0px !important;
       margin-left: 7px !important;
+    }
+
+    .navbar 
+    {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: #515663;
+      z-index: 1000;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .content 
+    {
+      margin-top: 50px;
     }
     
     .mycanvas 
