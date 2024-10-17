@@ -1,0 +1,105 @@
+nincs extra login layer, így a főoldalon már látható minden. (Ezt a végén lehet kéne módosítani, de egyelőre jó lesz)
+index.html -  az adott heti timesheet táblázatot mutatja
+time-add.html - időtartamot lehet hozzáadni egy kiválasztott projekthez
+time-edit.html - már meglévő időtartamot lehet módosítani
+time-project-add.html - egy kiválasztott héthez lehet hozzáadni egy projektet
+project.html - az összes projectet táblázatban
+project-add.html - új projektet lehet hozzáadni
+project-edit.html - új projektet lehet szerkeszteni
+
+Routing
+middleware/common
+    changeRoute
+    getCurrentWeek
+    getSelectedWeek
+    render
+    getStatus
+    getPriority
+    getTag
+    saveStatus
+    savePriority
+    saveTag
+
+middleware/timesheet
+    getTimePeriod
+    saveTimePeriod
+    delTimePeriod
+
+middleware/project
+    getAddedProject
+    getProject
+    AddtoAddedProject
+    saveProject
+    delProject
+
+GET /
+    changeRoute - redirect to /timesheet
+
+GET /timesheet
+    getCurrentWeek
+    getAddedProject
+    getTimePeriod
+    render(index.html)
+
+GET,POST /timesheet/new
+    getProject
+    saveTimePeriod
+    render(time-add.html)
+    - ellenőrizze, hogy minden kötelező adat be lett e küldve
+        ha nem, akkor töltse újra az oldalt a már kitöltött részekkel
+        ha igen, akkor küldje el a database nek
+
+GET /timesheet/edit/:timeid
+    getTimePeriod
+    getProject
+    saveTimePeriod
+    render(time-edit.html)
+
+GET /timesheet/del/:timeid
+    getTimePeriod
+    delTimePeriod
+
+GET,POST /timesheet/add-project
+    getProject
+    getSelectedWeek
+    AddtoAddedProject
+    render(time-project-add.html)
+    - ellenőrizze, hogy megadtak e project nevet
+        ha nem, akkor töltse újra az oldalt a megadott hetet megtartva
+        ha igen, akkor küldje el a database nek
+
+GET /project/
+    getProject
+    render(project.html)
+
+GET,POST /project/new
+    getStatus
+    getPriority
+    getTag
+    saveStatus - ha van új
+    savePriority - ha van új
+    saveTag - ha van új
+    saveProject
+    render(project-add.html)
+    - ellenőrizze, hogy minden kötelező adat be lett e küldve
+        ha nem, akkor töltse újra az oldalt a már kitöltött részekkel
+        ha igen, akkor küldje el a database nek
+
+GET,POST /project/edit/:projectid
+    getStatus
+    getPriority
+    getTag
+    getProject
+    saveStatus - ha van új
+    savePriority - ha van új
+    saveTag - ha van új
+    saveProject
+    render(project-add.html)
+    - ellenőrizze, hogy nem törölték, majd hagyták üresen a kötelező mezőket
+        ha igen, akkor töltse újra az oldalt a már kitöltött részekkel
+        ha nem, akkor küldje el a database nek
+
+GET /project/del/:projectid
+    getTimePeriod
+    getProject
+    delProject

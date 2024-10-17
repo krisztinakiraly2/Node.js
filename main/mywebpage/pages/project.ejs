@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Edit time</title>
+    <title>Projects</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/f6a884618b.js" crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@
             <i class="fa-solid fa-bars"></i>
           </button>
 
-          <a class="navbar-brand" href="/index.html">
+          <a class="navbar-brand" href="/timesheet">
               <img src="/Pictures/cat.png" alt="Logo" width="26" height="28" class="d-inline-block align-text-top">
               <span class="ms-2" style="color: #F1F1F1;">My website</span>
           </a>
@@ -29,65 +29,69 @@
     </nav>
 
     <div class="container text-center content">
-        <h2>Edit time</h2>
-
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th class="col-lg-3"></th>
-                    <th class="col-lg-3 mybottomborder myrightborder">Value</th>
-                    <th class="col-lg-3 mybottomborder">Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th class="col-lg-3"></th>
-                    <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
-                    <td class="col-lg-3 mybottomborder">
-                        <input type="text" class="form-select" placeholder="" id="project-name">
-                    </td>
-                    
-                </tr>
-                <tr>
-                    <th class="col-lg-3"></th>
-                    <td class="col-lg-3 text-start mybottomborder myrightborder">Date</td>
-                    <td class="col-lg-3 mybottomborder">
-                        <input type="date" class="form-control" placeholder="" id="date">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-lg-3"></td>
-                    <td class="col-lg-3 text-start mybottomborder myrightborder">Start</td>
-                    <td class="col-lg-3 mybottomborder">
-                        <input type="time" class="form-control" placeholder="" id="time-start">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-lg-3"></td>
-                    <td class="col-lg-3 text-start mybottomborder myrightborder">End</td>
-                    <td class="col-lg-3 mybottomborder">
-                        <input type="time" class="form-control" placeholder="" id="time-end">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-lg-3"></td>
-                    <td class="col-lg-6 text-start" colspan="4">Notes</td>
-                    <td class="col-lg-3"></td>
-                </tr>
-                <tr>
-                    <td class="col-lg-3"></td>
-                    <td class="col-lg-6 note" colspan="4">
-                        <textarea type="text" class="form-control" placeholder="" rows="3" id="notes"></textarea>
-                    </td>
-                    <td class="col-lg-3"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="d-inline-flex gap-1">
-            <a href="/" type="submit" class="btn" style="background-color: #53ab50; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Save</a>
-            <a href="/" type="cancel" class="btn" style="background-color: #68686a; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Cancel</a>
+      <div class="d-flex justify-content-center align-items-center flex-column pb-2">
+        <div class="d-flex align-items-center">
+            <img src="/Pictures/project.png" width="28" height="30" class="align-middle">
+            <h2 class="ms-2 mb-0">Projects</h2>
         </div>
+        <div class="custom-line mt-2"></div>
+      </div>          
+
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th class="col-lg-3 mybottomborder myrightborder">Project</th>
+            <th class="col-lg-3 mybottomborder myrightborder">Status</th>
+            <th class="col-lg-3 mybottomborder myrightborder">Priority</th>
+            <th class="col-lg-3 mybottomborder">Tags</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="col-lg-3 mybottomborder myrightborder myth">
+              Project 1
+              <a href="/project/edit/1" class="myth">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+            </td>
+            <td class="col-lg-3 mybottomborder myrightborder">
+              <div class="box" style="--color: #82bbd9; --text-color:#122c50;">In dev</div>
+            </td>
+            <td class="col-lg-3 mybottomborder myrightborder">
+              <div class="box" style="--color: #8cd982; --text-color:#12501b;">Low</div>
+            </td>
+            <td class="col-lg-3 mybottomborder">
+              <div class="d-flex justify-content-start">
+                <div class="box" style="--margin: 10px; --color: #9082d9; --text-color:#372e5f;">Group 1</div>
+                <div class="box" style="--color: #82bbd9; --text-color:#122c50;">Group 2</div>
+              </div>
+            </td>
+          </tr>
+
+          <tbody>
+            <tr>
+              <td class="col-lg-3 mybottomborder myrightborder myth">
+                Project 2
+                <a href="/project/edit/2" class="myth">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+              </td>
+              <td class="col-lg-3 mybottomborder myrightborder">
+                <div class="box" style="--color: #82bbd9; --text-color:#122c50;">In dev</div>
+              </td>
+              <td class="col-lg-3 mybottomborder myrightborder">
+                <div class="box" style="--color: #c5d982; --text-color:#7e7921;">Medium</div>
+              </td>
+              <td class="col-lg-3 mybottomborder"></td>
+            </tr>
+        </tbody>
+      </table>
+
+      <div class="d-inline-flex fixed-bottom-right">
+        <a href="/project/new" type="button" class="btn" style="background-color: #756ec7; color: #f1f1f1;">+ Add project</a>
+      </div>
+    
     </div>
     
   </body>
@@ -95,11 +99,11 @@
   <div class="offcanvas offcanvas-start custom-text-light mycanvas show" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
 
     <div class="offcanvas-body my-canvas-body">
-        <a href="/index.html" tabindex="-1" role="button" class="no-outline">
+        <a href="/timesheet" tabindex="-1" role="button" class="no-outline">
             <img src="/Pictures/timer.png" class="btn btn-secondary mb-0 timer-icon" width="33" height="35" alt="Task">
         </a>
 
-        <a href="/project.html" tabindex="-1" role="button">
+        <a href="/project" tabindex="-1" role="button">
             <img src="/Pictures/task.png" class="btn btn-secondary mb-0 task-icon" width="33" height="38" alt="Task">
         </a>
     </div>
@@ -107,18 +111,49 @@
   </div>
 
   <style>
-    .form-control, .form-select, .textarea
+    .fixed-bottom-right 
     {
-        background-color: #2A2E34; 
-        color: #f1f1f1;
-        border-color: #959FAB;
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
     }
 
-    .form-control:focus, .form-select:focus
+    .myth
     {
-        background-color: #2A2E34 !important;
-        color: #f1f1f1 !important;
-        border-color: #6c757d;
+      color: #959FAB !important;
+    }
+
+    .box
+    {
+      padding: 3px 12px 3px 12px !important;
+      border-radius: 3px 3px 3px 3px;
+      width: fit-content;
+      position: relative;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: bold;
+      background-color: var(--color) !important;
+      color: var(--text-color) !important; 
+      margin-right: var(--margin);
+    }
+
+    .custom-line 
+    {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+
+    .custom-line::before
+    {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 300px; /* 15px longer on both sides (30px total) */
+        height: 1px;
+        background-color: #959FAB; /* Adjust the color if needed */
+        left: -150px;
     }
 
     h2
@@ -143,6 +178,10 @@
     .note
     {
         text-align: left;
+        border-right: 1px solid #959FAB !important;
+        border-left: 1px solid #959FAB !important;
+        border-bottom: 1px solid #959FAB !important;
+        border-top: 3px solid #959FAB !important;
         border-color: #959FAB !important;
     }
 

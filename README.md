@@ -24,6 +24,7 @@ Alul található egy gomb, amivel új projektet lehet létrehozni. Erre vagy egy
 	- Notes*
 
 - Project
+	- Name
 	- Hours spent in total
 	- Status*
 	- Priority*
@@ -33,3 +34,15 @@ Alul található egy gomb, amivel új projektet lehet létrehozni. Erre vagy egy
 * *not mandatory to fill out
 
 Figma project:  https://www.figma.com/design/WQOG9FPwh4NhqXK9Eneo3E/Szerver-oldali?node-id=0-1&t=P5ZIegcKyLMZJbSt-1
+
+Fejlesztési lehetőségek:
+	- Időmérés
+	- Timesheet exportálása excelként
+	- Login and users
+	- Felugró ablakok új ablakok helyett (add és edit)
+	- Titkosítás
+	- Külön oldal a statusok, prioritások, tagek editálásának
+	- Jobban megvalósított UI
+	- Keresés
+	- Canban tábla
+	- Szűrés és összesítés tag alapján
