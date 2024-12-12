@@ -10,11 +10,13 @@ const savePriority = require('./middleware/common/savePriority');
 const saveTag = require('./middleware/common/saveTag');
 
 const getTimePeriod = require('./middleware/timesheet/getTimePeriod');
+const getTimePeriods = require('./middleware/timesheet/getTimePeriods');
 const saveTimePeriod = require('./middleware/timesheet/saveTimePeriod');
 const delTimePeriod = require('./middleware/timesheet/delTimePeriod');
 
 const getAddedProject = require('./middleware/project/getAddedProject');
 const getProject = require('./middleware/project/getProject');
+const getProjects = require('./middleware/project/getProjects');
 const AddtoAddedProject = require('./middleware/project/AddToAddedProject');
 const saveProject = require('./middleware/project/saveProject');
 const delProject = require('./middleware/project/delProject');
@@ -31,7 +33,7 @@ module.exports = function (app) {
         '/timesheet',
         getCurrentWeek(objRepo),
         getAddedProject(objRepo),
-        getTimePeriod(objRepo),
+        getTimePeriods(objRepo),
         render(objRepo, 'index')
     );
 
@@ -39,7 +41,7 @@ module.exports = function (app) {
         '/timesheet/new',
         getProject(objRepo),
         saveTimePeriod(objRepo),
-        render(objRepo, 'time-add')
+        render(objRepo, 'time-add-edit')
     );
 
     app.use(
@@ -47,7 +49,7 @@ module.exports = function (app) {
         getTimePeriod(objRepo),
         getProject(objRepo),
         saveTimePeriod(objRepo),
-        render(objRepo, 'time-edit')
+        render(objRepo, 'time-add-edit')
     );
 
     app.get(
@@ -66,7 +68,7 @@ module.exports = function (app) {
 
     app.get(
         '/project',
-        getProject(objRepo),
+        getProjects(objRepo),
         render(objRepo, 'project')
     );
         
@@ -79,7 +81,7 @@ module.exports = function (app) {
         savePriority(objRepo),
         saveTag(objRepo),
         saveProject(objRepo),
-        render(objRepo, 'project-add')
+        render(objRepo, 'project-add-edit')
     );
         
     app.use(
@@ -92,14 +94,13 @@ module.exports = function (app) {
         savePriority(objRepo),
         saveTag(objRepo),
         saveProject(objRepo),
-        render(objRepo, 'project-edit')
+        render(objRepo, 'project-add-edit')
     );
         
     app.get(
         '/project/del/:projectid',
         getTimePeriod(objRepo),
         getProject(objRepo),
-        delProject(objRepo),
-        render(objRepo, 'project-del')
+        delProject(objRepo)
     );
 };

@@ -1,0 +1,190 @@
+<style>
+    .fixed-bottom-right 
+    {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+    }
+
+    .myth
+    {
+      color: #959FAB !important;
+    }
+
+    .box
+    {
+      padding: 3px 12px 3px 12px !important;
+      border-radius: 3px 3px 3px 3px;
+      width: fit-content;
+      position: relative;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: bold;
+      background-color: var(--color) !important;
+      color: var(--text-color) !important; 
+      margin-right: var(--margin);
+    }
+
+    .custom-line 
+    {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+
+    .custom-line::before
+    {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 300px; /* 15px longer on both sides (30px total) */
+        height: 1px;
+        background-color: #959FAB; /* Adjust the color if needed */
+        left: -150px;
+    }
+
+    h2
+    {
+        color: #f1f1f1 !important;
+        margin-bottom: 15px;
+    }
+
+    .table
+    {
+        background-color: #2A2E34 !important;
+        
+    }
+
+    th, tr, td
+    {
+        background-color: #2A2E34 !important;
+        color: #f1f1f1 !important;
+        border: none;
+    }
+
+    .note
+    {
+        text-align: left;
+        border-right: 1px solid #959FAB !important;
+        border-left: 1px solid #959FAB !important;
+        border-bottom: 1px solid #959FAB !important;
+        border-top: 3px solid #959FAB !important;
+        border-color: #959FAB !important;
+    }
+
+    .myrightborder
+    {
+        border-right: 1px solid #959FAB !important;
+        border-color: #959FAB !important;
+    }
+
+    .mybottomborder
+    {
+        border-bottom: 1px solid #959FAB !important;
+        border-color: #959FAB !important;
+    }
+
+    a
+    {
+      text-decoration: none;
+    }
+
+    body
+    {
+      background-color: #2A2E34;
+    }
+
+    .mynavbar
+    {
+      padding-left: 0px !important;
+      margin-left: 7px !important;
+    }
+
+    .navbar 
+    {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: #515663;
+      z-index: 1000;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .content 
+    {
+      margin-top: 70px;
+    }
+    
+    .mycanvas 
+    {
+      background-color: #30353C; 
+      width: 56px !important; 
+      max-width: 100px!important; 
+      padding-left: 0px !important; 
+      padding-right: 0px !important; 
+      padding-top: 0px !important; 
+      padding-bottom: 0px !important; 
+      margin-top: 57px !important; 
+      margin-bottom: 0px !important; 
+      margin-left: 0px !important; 
+      margin-right: 0px !important;
+      border-right-color: #515663 !important;
+      border-right-width: 3px !important;
+    }
+
+    .my-canvas-body
+    {
+      padding-left: 10px !important; 
+      padding-right: 0px !important; 
+      padding-top: 0px !important; 
+      padding-bottom: 0px !important; 
+      margin-top: 0px !important; 
+      margin-bottom: 0px !important; 
+      margin-left: 0px !important; 
+      margin-right: 0px !important;
+      border-right-color: #515663 !important;
+      border-right-width: 2px;
+    }
+
+    .timer-icon
+    {
+      margin-top: 10px; 
+      margin-bottom: 0px; 
+      margin-left: 0px; 
+      margin-right: 0px; 
+      padding-left: 5px; 
+      padding-right: 5px; 
+      padding-top: 5px; 
+      padding-bottom: 5px;
+    }
+
+    .task-icon
+    {
+      margin-top: 10px; 
+      padding-right: 6px; 
+      padding-left: 6px; 
+      padding-top: 4.5px; 
+      padding-bottom: 5.5px;
+    }
+
+    .toggle-icon
+    {
+      color: #959FAB;
+      cursor: pointer;
+      padding-right: 15px;
+    }
+
+    .toggle-icon:hover
+    {
+      color: rgb(0, 0, 0);
+    }
+
+    .no-outline 
+    {
+      outline: none;
+      text-decoration: none;
+    }
+  </style>
