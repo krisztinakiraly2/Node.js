@@ -5,15 +5,15 @@ Egy olyan weboldal létrehozása, amiben a felhasználó trackelni tudja tetsző
 
 Az oldal megnyitása után a felhasználó az adott hét naptárjával találkozik, ahol napi felbontásban látható, hogy mennyit foglalkozott egy-egy projekttel. Itt hozzá lehet adni projektet az adott héthez, editálni vagy törölni lehet a már meglévő entryket, vagy megjegyzést fűzni ezekhez.
 
-![[Weekly view.png]]
+See Weekly view.png
 
 A baloldali menüben lehet váltani a heti és a projekteket összefoglaló nézetek között. A projekt nézetre váltva a projektek felsorolása látható a rajta lévő status, prioritás és egyéb címkékkel.
 
-![[Project view.png]]
+See Project view.png
 
 Alul található egy gomb, amivel új projektet lehet létrehozni. Erre vagy egy már meglévő projektre kattintva megnyílik egy ablak, ahol az adott projekt adatait lehet szerkeszteni, illetve új esetén kitölteni azokat. Meglévőnél itt akár törölni is lehet azt.
 
-![[Project editing view.png]]
+See Project editing view.png
 # Entitások felépítése
 
 - Time
