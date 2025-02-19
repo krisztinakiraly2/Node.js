@@ -1,48 +1,41 @@
-# Az alkalmazás célja
+# Purpose of the application
+To create a website where the user can track the time spent on any project. The user can create projects, time entries and labels. Comments can also be added to the time entries, which makes it easier to write a report later. Labels can be used to indicate the status of a project or its belonging to a category.
 
-Egy olyan weboldal létrehozása, amiben a felhasználó trackelni tudja tetszőleges projekttel eltöltött idejét. A felhasználó létrehozhat projekteket, time entryket és labeleket. A time entrykhez megjegyzést is lehet fűzni, ami megkönnyíti egy esetleges, későbbi beszámoló megírását. A labelekkel tudja jelezni egy projekt állapotát vagy valamilyen kategóriához való tartozását.
-# Az alkalmazás működése
+# How the application works
+After opening the page, the user is presented with a calendar for the given week, where they can see in daily breakdown how much time they have spent on each project. Here they can add projects to the given week, edit or delete existing entries, or add comments to them. (See Weekly view.png)
 
-Az oldal megnyitása után a felhasználó az adott hét naptárjával találkozik, ahol napi felbontásban látható, hogy mennyit foglalkozott egy-egy projekttel. Itt hozzá lehet adni projektet az adott héthez, editálni vagy törölni lehet a már meglévő entryket, vagy megjegyzést fűzni ezekhez.
+In the left menu, you can switch between the weekly and project summary views. When you switch to the project view, you can see a list of projects with their statuses, priorities and other labels. (See Project view.png)
 
-See Weekly view.png
+There is a button at the bottom to create a new project. Clicking on this or an existing project will open a window where you can edit the data for the given project or fill it in if you are creating a new one. If you already have one, you can even delete it here. (See Project editing view.png)
 
-A baloldali menüben lehet váltani a heti és a projekteket összefoglaló nézetek között. A projekt nézetre váltva a projektek felsorolása látható a rajta lévő status, prioritás és egyéb címkékkel.
-
-See Project view.png
-
-Alul található egy gomb, amivel új projektet lehet létrehozni. Erre vagy egy már meglévő projektre kattintva megnyílik egy ablak, ahol az adott projekt adatait lehet szerkeszteni, illetve új esetén kitölteni azokat. Meglévőnél itt akár törölni is lehet azt.
-
-See Project editing view.png
-# Entitások felépítése
-
+# Entity structure
 - Time
-	- Date
-	- Start time
-	- Finish time*
-	- Connecting project
-	- Notes*
+- Date
+- Start time
+- Finish time*
+- Connecting project
+- Notes*
 
 - Project
-	- Name
-	- Hours spent in total
-	- Status*
-	- Priority*
-	- Tags*
-	- Task description*
+- Name
+- Hours spent in total
+- Status*
+- Priority*
+- Tags*
+- Task description*
 
 * *not mandatory to fill out
 
-Figma project:  https://www.figma.com/design/WQOG9FPwh4NhqXK9Eneo3E/Szerver-oldali?node-id=0-1&t=P5ZIegcKyLMZJbSt-1
+Figma project: https://www.figma.com/design/WQOG9FPwh4NhqXK9Eneo3E/Szerver-oldali?node-id=0-1&t=P5ZIegcKyLMZJbSt-1
 
-Fejlesztési lehetőségek:
-	- Időmérés
-	- Timesheet exportálása excelként
-	- Login and users
-	- Felugró ablakok új ablakok helyett (add és edit)
-	- Titkosítás
-	- Külön oldal a statusok, prioritások, tagek editálásának
-	- Jobban megvalósított UI
-	- Keresés
-	- Canban tábla
-	- Szűrés és összesítés tag alapján
+# Enhancement options:
+- Time measurement
+- Timesheet export as excel
+- Login and users
+- Pop-ups instead of new windows (add and edit)
+- Encryption
+- Separate page for editing statuses, priorities, tags
+- Better implemented UI
+- Search
+- Canban board
+- Filtering and summarizing by tag
