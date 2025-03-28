@@ -1,0 +1,91 @@
+<% if (typeof successMessage !== 'undefined') { %>
+    <div class="alert alert-success" id="successMessage">
+        <span class="message-text"><%= successMessage %></span>
+        <button class="close-button" onclick="closeMessage()">X</button>
+    </div>
+<% } %>
+
+<% if (typeof myerror !== 'undefined') { %>
+    <div class="alert alert-danger" id="alertMessage">
+        <span class="message-text"><%= myerror %></span>
+        <button class="close-button" onclick="closeMessage()">X</button>
+    </div>
+<% } %>
+
+<script>
+    window.onload = function() 
+    {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('status')) 
+        {
+            const url = new URL(window.location);
+            url.searchParams.delete('status');
+            window.history.replaceState({}, '', url.toString());
+        }
+    };
+
+    function closeMessage() 
+    {
+        const successMessageDiv = document.getElementById('successMessage');
+        if (successMessageDiv) 
+        {
+            successMessageDiv.style.display = 'none';
+        }
+
+        const alertMessageDiv = document.getElementById('successMessage');
+        if (alertMessageDiv) 
+        {
+            alertMessageDiv.style.display = 'none';
+        }
+    }
+</script>
+
+<style>
+    .alert 
+    {
+        width: auto;
+        max-width: 300px;
+        padding: 10px;
+        
+        border-radius: 5px;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        transform: translateX(-50%);
+        left: 50%;
+    }
+
+    .alert-success
+    {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .alert-danger
+    {
+        background-color: #edd4d4;
+        color: #571515;
+        border: 1px solid #e6c3c3;
+    }
+
+    .message-text 
+    {
+        margin-right: 10px;  /* Space between text and button */
+    }
+
+    .close-button 
+    {
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #155724;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>

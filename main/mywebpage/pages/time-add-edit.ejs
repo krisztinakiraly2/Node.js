@@ -1,66 +1,188 @@
 <%- include('header') -%>
+<%- include('messages') -%>
 
 <div class="container text-center content">
     <h2><% if(typeof time === 'undefined') {%>Add time<%} else {%>Edit time<%} %></h2>
 
-    <table class="table align-middle">
-        <thead>
-            <tr>
-                <th class="col-lg-3"></th>
-                <th class="col-lg-3 mybottomborder myrightborder">Value</th>
-                <th class="col-lg-3 mybottomborder">Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th class="col-lg-3"></th>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="text" class="form-select" placeholder="" id="project-name" value="<%= (typeof time === 'undefined') ? '' : time.project_name %>">
-                </td>
-            </tr>
-            <tr>
-                <th class="col-lg-3"></th>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Date</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="date" class="form-control" placeholder="" id="date" value="<%= (typeof time === 'undefined') ? '' : time.date %>">
-                </td>
-            </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Start</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="time" class="form-control" placeholder="" id="time-start" value="<%= (typeof time === 'undefined') ? '' : time.start %>">
-                </td>
-            </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">End</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="time" class="form-control" placeholder="" id="time-end" value="<%= (typeof time === 'undefined') ? '' : time.end %>">
-                </td>
-            </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-6 text-start" colspan="4">Notes</td>
-                <td class="col-lg-3"></td>
-            </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-6 note" colspan="4">
-                    <textarea type="text" class="form-control" placeholder="" rows="3" id="notes"><%= (typeof time === 'undefined') ? '' : time.project_name %></textarea>
-                </td>
-                <td class="col-lg-3"></td>
-            </tr>
-        </tbody>
-    </table>
+    <% if (typeof myerror !== 'undefined') { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
 
-    <div class="d-inline-flex gap-1">
-        <a href="/" type="submit" class="btn" style="background-color: #53ab50; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Save</a>
-        <a href="/" type="cancel" class="btn" style="background-color: #68686a; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Cancel</a>
-        <% if(typeof time === 'undefined') {} else {%> <a href="/" type="delete" class="btn" style="background-color: #e73e3e; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Delete</a> <%} %>
-    </div>
-</div>
+    <%
+    let formattedDate = ''; 
+    let startTime = '';
+    let endTime = '';
     
+    if (typeof time !== 'undefined') {
+        const project = projects.find(p => p._id.toString() === time.project_name.toString());
+        if (project) {
+            time.project_name = project.name;
+        }
+    
+        // Convert to Budapest timezone
+        const options = { timeZone: 'Europe/Budapest', year: 'numeric', month: '2-digit', day: '2-digit' };
+        const startDate = new Date(time.start).toLocaleString('hu-HU', options);
+        const endDate = new Date(time.end).toLocaleString('hu-HU', options);
+    
+        // Format date correctly
+        formattedDate = startDate.replace(/\./g, '').replace(/\s/g, '. '); // "2024. 03. 28."
+    
+        // Format time correctly
+        startTime = new Date(time.start).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Budapest' });
+        endTime = new Date(time.end).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Budapest' });
+    
+        // Ensure `endTime` is empty if it's an ongoing time entry
+        if (new Date(time.end).getUTCFullYear() === 1900 || isNaN(new Date(time.end).getTime())) {
+            endTime = '';
+        }
+    }
+    %>    
+
+    <form action="/timesheet/save/<%= (typeof time !== 'undefined' && time._id) ? time._id : '' %>" method="POST">
+
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <th class="col-lg-3 mybottomborder myrightborder">Value</th>
+                    <th class="col-lg-3 mybottomborder">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <select class="form-control" id="project-name" name="project_name">
+                            <option value="" disabled selected>Select a project</option>
+                            <% projects.forEach(project => { %>
+                                <option value="<%= project._id %>" 
+                                    <% if (typeof time !== 'undefined' && time.project_name === project.name) { %> selected <% } %>>
+                                    <%= project.name %>
+                                </option>
+                            <% }) %>
+                        </select>                        
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Date</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <input type="text" class="form-control" id="date" name="date" required
+                               value="<%= (typeof time === 'undefined') ? '' : formattedDate %>">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Start Time</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <input type="text" class="form-control" id="start-time" name="start" required
+                               value="<%= (typeof time === 'undefined') ? '' : startTime %>">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">End Time</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <input type="text" class="form-control" id="end-time" name="end" 
+                               value="<%= (typeof time === 'undefined') ? '' : endTime %>">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-lg-3"></td>
+                    <td class="col-lg-6 text-start" colspan="4">Notes</td>
+                    <td class="col-lg-3"></td>
+                </tr>
+                <tr>
+                    <td class="col-lg-3"></td>
+                    <td class="col-lg-6 note" colspan="4">
+                        <textarea name="notes" class="form-control" rows="3" id="notes"><%= (typeof time === 'undefined') ? '' : time.notes %></textarea>
+                    </td>
+                    <td class="col-lg-3"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-inline-flex gap-1">
+            <button type="submit" class="btn" style="background-color: #53ab50; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Save</button>
+            <a href="javascript:window.history.back();" 
+                class="btn" style="background-color: #68686a; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">
+                Cancel
+            </a>
+
+            <% if(typeof time !== 'undefined') { %>
+                <a href="#" id="delete-button" data-time-id="<%= time._id %>" 
+                   class="btn" style="background-color: #e73e3e; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Delete</a>
+            <% } %>
+        </div>
+    </form>
+</div>
+
 <%- include('time-style') -%>
+
+<script>
+    document.getElementById('delete-button')?.addEventListener('click', function (event) {
+        event.preventDefault();
+        const timeId = this.getAttribute('data-time-id');
+        if (confirm('Are you sure you want to delete this time entry?')) 
+        {
+            window.location.href = '/timesheet/del/' + timeId;
+        }
+    });
+
+    flatpickr("#date", 
+    {
+        theme: "dark",
+        dateFormat: "Y. m. d.",
+        locale: { firstDayOfWeek: 1 },
+        timeZone: "Europe/Budapest",
+        onClose: function (selectedDates, dateStr) 
+        {
+            if (dateStr) 
+            {
+                document.getElementById("date").classList.remove("is-invalid");
+                bootstrap.Popover.getInstance(document.getElementById("date")).hide();
+            }
+        }
+    });
+
+    flatpickr("#start-time", 
+    {
+        enableTime: true,
+        time_24hr: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        theme: "dark",
+        onClose: function (selectedDates, timeStr) 
+        {
+            if (timeStr) 
+            {
+                document.getElementById("start-time").classList.remove("is-invalid");
+                bootstrap.Popover.getInstance(document.getElementById("start-time")).hide();
+            }
+
+            if (selectedDates.length > 0) 
+            {
+                const localDate = selectedDates[0];
+
+                // Convert local time to UTC for saving
+                const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
+                document.getElementById("end-time").dataset.utcValue = utcDate.toISOString();
+            }
+        }
+    });
+
+    flatpickr("#end-time",
+    {
+        enableTime: true,
+        time_24hr: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        theme: "dark",
+    });
+</script>
+
+<%- include('time-errors') -%>
 <%- include('footer') -%>

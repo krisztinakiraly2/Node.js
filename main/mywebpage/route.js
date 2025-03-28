@@ -4,25 +4,29 @@ const getSelectedWeek = require('./middleware/common/getSelectedWeek');
 const render = require('./middleware/common/render');
 const getStatus = require('./middleware/common/getStatus');
 const getPriority = require('./middleware/common/getPriority');
-const getTag = require('./middleware/common/getTag');
-const saveStatus = require('./middleware/common/saveStatus');
-const savePriority = require('./middleware/common/savePriority');
-const saveTag = require('./middleware/common/saveTag');
+const requireOption = require('./middleware/common/requireOption')
 
 const getTimePeriod = require('./middleware/timesheet/getTimePeriod');
 const getTimePeriods = require('./middleware/timesheet/getTimePeriods');
 const saveTimePeriod = require('./middleware/timesheet/saveTimePeriod');
 const delTimePeriod = require('./middleware/timesheet/delTimePeriod');
 
-const getAddedProject = require('./middleware/project/getAddedProject');
 const getProject = require('./middleware/project/getProject');
 const getProjects = require('./middleware/project/getProjects');
-const AddtoAddedProject = require('./middleware/project/AddToAddedProject');
 const saveProject = require('./middleware/project/saveProject');
 const delProject = require('./middleware/project/delProject');
+const saveMsg = require('./middleware/common/getMsg');
+const updateTotalTimes = require('./middleware/project/updateTotalTimes');
+
+const TimeModel = require('./models/time');
+const ProjectModel = require('./models/project');
 
 module.exports = function (app) {
-    const objRepo = {};
+    const objRepo = 
+    {
+        TimeModel: TimeModel,
+        ProjectModel: ProjectModel
+    };
 
     app.get(
         '/',
@@ -32,24 +36,34 @@ module.exports = function (app) {
     app.get(
         '/timesheet',
         getCurrentWeek(objRepo),
-        getAddedProject(objRepo),
+        saveMsg(objRepo),
+        getProjects(objRepo),
         getTimePeriods(objRepo),
         render(objRepo, 'index')
     );
 
     app.use(
         '/timesheet/new',
-        getProject(objRepo),
-        saveTimePeriod(objRepo),
+        getProjects(objRepo),
         render(objRepo, 'time-add-edit')
     );
 
     app.use(
         '/timesheet/edit/:timesheetid',
+        getProjects(objRepo),
+        getCurrentWeek(objRepo),
         getTimePeriod(objRepo),
-        getProject(objRepo),
-        saveTimePeriod(objRepo),
         render(objRepo, 'time-add-edit')
+    );
+
+    app.post(
+        '/timesheet/save/:timesheetid?',
+        getProjects(objRepo),
+        getCurrentWeek(objRepo),
+        getTimePeriods(objRepo),
+        getTimePeriod(objRepo),
+        updateTotalTimes(objRepo),
+        saveTimePeriod(objRepo),
     );
 
     app.get(
@@ -61,14 +75,18 @@ module.exports = function (app) {
     app.use(
         '/timesheet/add-project',
         getProject(objRepo),
-        getSelectedWeek(objRepo),
-        AddtoAddedProject(objRepo),
+        //getSelectedWeek(objRepo),
         render(objRepo,'time-project-add')
     );
 
     app.get(
         '/project',
+        saveMsg(objRepo),
+        getPriority(objRepo),
+        getStatus(objRepo),
         getProjects(objRepo),
+        getCurrentWeek(objRepo),
+        updateTotalTimes(objRepo),
         render(objRepo, 'project')
     );
         
@@ -76,11 +94,6 @@ module.exports = function (app) {
         '/project/new',
         getStatus(objRepo),
         getPriority(objRepo),
-        getTag(objRepo),
-        saveStatus(objRepo),
-        savePriority(objRepo),
-        saveTag(objRepo),
-        saveProject(objRepo),
         render(objRepo, 'project-add-edit')
     );
         
@@ -88,13 +101,15 @@ module.exports = function (app) {
         '/project/edit/:projectid',
         getStatus(objRepo),
         getPriority(objRepo),
-        getTag(objRepo),
         getProject(objRepo),
-        saveStatus(objRepo),
-        savePriority(objRepo),
-        saveTag(objRepo),
-        saveProject(objRepo),
         render(objRepo, 'project-add-edit')
+    );
+
+    app.post(
+        '/project/save/:projectid?',
+        getProject(objRepo),
+        getProjects(objRepo),
+        saveProject(objRepo)
     );
         
     app.get(

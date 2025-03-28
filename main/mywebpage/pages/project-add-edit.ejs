@@ -1,69 +1,116 @@
-<%- include('header') -%>
+<%- include('header') -%> 
 
 <div class="container text-center content">
     <h2><% if(typeof project === 'undefined') {%>Add project<%} else {%>Edit project<%} %></h2>
 
-    <table class="table align-middle">
-        <thead>
-            <tr>
-                <th class="col-lg-3"></th>
-                <th class="col-lg-3 mybottomborder myrightborder">Value</th>
-                <th class="col-lg-3 mybottomborder">Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th class="col-lg-3"></th>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="text" class="form-select" id="project-name" value="<%= (typeof project === 'undefined') ? '' : project.name %>">
-                </td>
-                
-            </tr>
-            <tr>
-                <th class="col-lg-3"></th>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Tracked time</td>
-                <td class="col-lg-3 mybottomborder">
-                  <input type="text" class="form-control" id="tracked-time"  value="<%= (typeof project === 'undefined') ? '0h 0m' : project.tracked_time %>" disabled>
-                </td>
-            </tr>
-            <tr>
-              <td class="col-lg-3"></td>
-              <td class="col-lg-3 text-start mybottomborder myrightborder">Status</td>
-              <td class="col-lg-3 mybottomborder">
-                  <input type="text" class="form-select" placeholder="" id="status" value="<%= (typeof project === 'undefined') ? '' : project.status %>">
-              </td>
-          </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Priority</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="text" class="form-select" placeholder="" id="priority"  value="<%= (typeof project === 'undefined') ? '' : project.priority %>">
-                </td>
-            </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-3 text-start mybottomborder myrightborder">Tags</td>
-                <td class="col-lg-3 mybottomborder">
-                    <input type="text" class="form-select" placeholder="" id="tags" value="<%= typeof project === 'undefined' ? '' : project.tags.join(', ') %>">
-                </td>
-            </tr>
-            <tr>
-                <td class="col-lg-3"></td>
-                <td class="col-lg-6 note" colspan="4">
-                    <textarea type="text" class="form-control" rows="3" id="description"> <%= (typeof project === 'undefined') ? '' : project.description %></textarea>
-                </td>
-                <td class="col-lg-3"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="d-inline-flex gap-1">
-        <a href="/project" type="submit" class="btn" style="background-color: #53ab50; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Save</a>
-        <a href="/project" type="cancel" class="btn" style="background-color: #68686a; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Cancel</a>
-        <% if(typeof project === 'undefined') {} else {%> <a href="/" type="delete" class="btn" style="background-color: #e73e3e; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Delete</a> <%} %>
-    </div>
+    <form action="/project/save/<%= (typeof project !== 'undefined' && project._id) ? project._id : '' %>" method="POST">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <th class="col-lg-3 mybottomborder myrightborder">Value</th>
+                    <th class="col-lg-3 mybottomborder">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <input type="text" class="form-control" id="project-name" name="name" 
+                               value="<%= (typeof project === 'undefined') ? '' : project.name %>">
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-lg-3"></th>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Tracked time</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <input type="text" class="form-control" id="tracked-time" name="tracked_time" 
+                               value="<%= (typeof project === 'undefined' || project.tracked_time === undefined) 
+                                   ? '0h 0m' 
+                                   : Math.floor(project.tracked_time / 60) + 'h ' + (project.tracked_time % 60) + 'm' 
+                               %>" disabled>
+                    </td>                    
+                </tr>
+                <!-- Status Dropdown -->
+                <tr>
+                    <td class="col-lg-3"></td>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Status</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="" disabled selected>Select status</option>
+                            <% statuses.forEach(status => { %>
+                                <option value="<%= status.value %>" 
+                                    <% if (typeof project !== 'undefined' && project.status === status.value) { %> selected <% } %> 
+                                    style="background-color: <%= status.bgcolor %>; color: <%= status.textColor %>;">
+                                    <%= status.value %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </td>
+                </tr>
+                <!-- Priority Dropdown -->
+                <tr>
+                    <td class="col-lg-3"></td>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Priority</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <select class="form-select" id="priority" name="priority" required>
+                            <option value="" disabled selected>Select priority</option>
+                            <% priorities.forEach(priority => { %>
+                                <option value="<%= priority.value %>" 
+                                    <% if (typeof project !== 'undefined' && project.priority === priority.value) { %> selected <% } %> 
+                                    style="background-color: <%= priority.bgcolor %>; color: <%= priority.textColor %>;">
+                                    <%= priority.value %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-lg-3"></td>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">Tags</td>
+                    <td class="col-lg-3 mybottomborder">
+                        <input type="text" class="form-select" id="tags" name="tags" 
+                               value="<%= typeof project === 'undefined' ? '' : project.tags.join(', ') %>">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-lg-3"></td>
+                    <td class="col-lg-6 note" colspan="4">
+                        <textarea name="description" class="form-control"><%= (typeof project === 'undefined') ? '' : project.description %></textarea>
+                    </td>
+                    <td class="col-lg-3"></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <div class="d-inline-flex gap-1">
+            <button type="submit" class="btn" style="background-color: #53ab50; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Save</button>
+            <a href="/project" type="cancel" class="btn" style="background-color: #68686a; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Cancel</a>
+            <% if (typeof project === 'undefined') {} else { %>
+                <a href="#" id="delete-button" data-project-id="<%= project._id %>" 
+                   class="btn" style="background-color: #e73e3e; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">
+                    Delete
+                </a>
+            <% } %>        
+        </div>
+    </form>
 </div>
 
 <%- include('project-add-edit-style') -%>
+
+<script>
+    document.getElementById('delete-button')?.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default anchor behavior
+
+        const projectId = this.getAttribute('data-project-id'); // Get the project ID
+
+        // Show the confirmation dialog
+        if (confirm('Are you sure you want to delete this project?')) {
+            // If the user confirms, redirect to the delete route
+            window.location.href = '/project/del/' + projectId;
+        }
+    });
+</script>
+
 <%- include('footer') -%>

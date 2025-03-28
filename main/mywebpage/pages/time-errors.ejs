@@ -1,0 +1,116 @@
+<script>
+        document.addEventListener("DOMContentLoaded", function () 
+    {
+        const projectName = document.getElementById("project-name");
+        const dateInput = document.getElementById("date");
+        const startTimeInput = document.getElementById("start-time");
+        const endTimeInput = document.getElementById("end-time");
+
+        function initializePopover(input) 
+        {
+            return new bootstrap.Popover(input, { trigger: "manual", container: "body" });
+        }
+
+        const popovers = {
+            projectName: initializePopover(projectName),
+            dateInput: initializePopover(dateInput),
+            startTimeInput: initializePopover(startTimeInput),
+            endTimeInput: initializePopover(endTimeInput)
+        };
+
+        function showError(input, message) 
+        {
+            input.setAttribute("data-bs-content", message);
+
+            // Destroy existing popover instance before showing the new one
+            if (bootstrap.Popover.getInstance(input)) 
+            {
+                bootstrap.Popover.getInstance(input).dispose();
+            }
+
+            popovers[input.id] = initializePopover(input);
+            input.classList.add("is-invalid");
+            popovers[input.id].show();
+        }
+
+        function clearError(input) 
+        {
+            input.classList.remove("is-invalid");
+
+            if (bootstrap.Popover.getInstance(input)) 
+            {
+                bootstrap.Popover.getInstance(input).dispose();
+            }
+        }
+
+        function validateEndTime() 
+        {
+            const startTime = startTimeInput.value;
+            const endTime = endTimeInput.value;
+
+            if (startTime && endTime && endTime <= startTime) 
+            {
+                showError(endTimeInput, "End time must be later than start time.");
+                return false;
+            } 
+            else 
+            {
+                clearError(endTimeInput);
+                return true;
+            }
+        }
+
+        document.querySelector("form").addEventListener("submit", function (event) 
+        {
+            let isValid = true;
+
+            if (!projectName.value) 
+            {
+                showError(projectName, "Please select a project.");
+                isValid = false;
+            } 
+            else 
+            {
+                clearError(projectName);
+            }
+
+            if (!dateInput.value) 
+            {
+                showError(dateInput, "Please select a date.");
+                isValid = false;
+            } 
+            else 
+            {
+                clearError(dateInput);
+            }
+
+            if (!startTimeInput.value) 
+            {
+                showError(startTimeInput, "Please select a start time.");
+                isValid = false;
+            } 
+            else 
+            {
+                clearError(startTimeInput);
+            }
+
+            if (!validateEndTime()) 
+            {
+                isValid = false;
+            }
+
+            if (!isValid) 
+            {
+                event.preventDefault();
+            }
+        });
+
+        [projectName, dateInput, startTimeInput, endTimeInput].forEach(input => 
+        {
+            input.addEventListener("input", () => clearError(input));
+            input.addEventListener("click", () => clearError(input));
+        });
+
+        endTimeInput.addEventListener("input", validateEndTime);
+    });
+</script>

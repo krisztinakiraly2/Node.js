@@ -14,62 +14,78 @@
       <thead>
         <tr>
           <th class="col-lg-3 mybottomborder myrightborder">Project</th>
+          <th class="col-lg-3 mybottomborder myrightborder">Tracked Time</th>
           <th class="col-lg-3 mybottomborder myrightborder">Status</th>
           <th class="col-lg-3 mybottomborder myrightborder">Priority</th>
           <th class="col-lg-3 mybottomborder">Tags</th>
-        </tr>
+        </tr>     
       </thead>
 
       <tbody>
+        <%- include('messages') -%>
+
         <% projects.forEach((project) => { %>
           <tr>
             <!-- Project Name -->
             <td class="col-lg-3 mybottomborder myrightborder myth">
               <%= project.name %>
-              <a href="/project/edit/<%= project.projectid %>" class="myth">
+              <a href="/project/edit/<%= project._id %>" class="myth">
                 <i class="fa-solid fa-pen-to-square"></i>
               </a>
             </td>
+
+            <!-- Project Time -->
+            <td class="col-lg-3 mybottomborder myrightborder myth">
+              <%= (typeof project.tracked_time === 'undefined' || project.tracked_time === 0) 
+                  ? '0h 0m' 
+                  : Math.floor(project.tracked_time / 60) + 'h ' + (project.tracked_time % 60) + 'm' 
+              %>
+            </td>            
           
             <!-- Project Status -->
             <td class="col-lg-3 mybottomborder myrightborder">
-              <div class="box" style="--color: #82bbd9; --text-color:#122c50;">
-                <%= project.status %>
-              </div>
-            </td>
+              <% const status = statuses.find(s => s.value === project.status); %>
+              <% if (status) { %>
+                  <div class="box" style="--color: <%= status.bgcolor %>; --text-color: <%= status.textColor %>;">
+                      <%= project.status %>
+                  </div>
+              <% } else { %>
+                  <div class="box" style="background-color: #f0f0f0; color: #333;">
+                      <%= project.status %>
+                  </div>
+              <% } %>
+          </td>
           
             <!-- Project Priority -->
             <td class="col-lg-3 mybottomborder myrightborder">
-              <% if (project.priority === 'Low') { %>
-                <div class="box" style="--color: #8cd982; --text-color:#12501b;">
-                  <%= project.priority %>
-                </div>
-              <% } else if (project.priority === 'Medium') { %>
-                <div class="box" style="--color: #c5d982; --text-color:#7e7921;">
-                  <%= project.priority %>
-                </div>
-              <% } else if (project.priority === 'High') { %>
-                <div class="box" style="--color: #d98282; --text-color:#501212;">
-                  <%= project.priority %>
-                </div>
+              <% const priority = priorities.find(p => p.value === project.priority); %>
+              <% if (priority) { %>
+                  <div class="box" style="--color: <%= priority.bgcolor %>; --text-color: <%= priority.textColor %>;">
+                      <%= project.priority %>
+                  </div>
+              <% } else { %>
+                  <div class="box" style="--color: #f0f0f0; --text-color: #333;">
+                      <%= project.priority %>
+                  </div>
               <% } %>
-            </td>
+          </td>
           
             <!-- Project Tags -->
             <td class="col-lg-3 mybottomborder">
               <div class="d-flex justify-content-start">
-                <% if (project.tags.length > 0) { %>
+                <% if (project.tags && Array.isArray(project.tags) && project.tags.length > 0 && project.tags.some(tag => tag.trim().length > 0)) { %>
                   <% project.tags.forEach((tag) => { %>
-                    <div class="box" style="--color: #82bbd9; --text-color:#122c50; margin-right: 5px;">
-                      <%= tag %>
-                    </div>
+                    <% if (tag.trim().length > 0) { %>
+                      <div class="box" style="--color: #82bbd9; --text-color:#122c50; margin-right: 5px;">
+                        <%= tag %>
+                      </div>
+                    <% } %>
                   <% }) %>
-                <% } else { %>
-                  <div class="text-muted">No tags</div>
                 <% } %>
               </div>
-            </td>
-          </tr>
+            </td>           
+
+            </tr>
           <% }) %>
           
       </tbody>

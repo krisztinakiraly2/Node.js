@@ -4,36 +4,47 @@
 
 module.exports = function (objectrepository) 
 {
+    const requireOption = require('../common/requireOption');
+    const TimeModel = requireOption(objectrepository, 'TimeModel');
+
     return function (req, res, next) 
     {
-        res.locals.times =
-        [
-            {
-                timesheetid: '1',
-                project_name: 'My important project',
-                date: '2024-12-10',
-                start: '10:30',
-                end: '14:55',
-                has_note: 'true'
-            },
-            {
-                timesheetid: '2',
-                project_name: 'My important project',
-                date: '2024-12-12',
-                start: '10:00',
-                end: '16:42',
-                has_note: 'false'
-            },
-            {
-                timesheetid: '4',
-                project_name: 'My important project',
-                date: '2024-12-15',
-                start: '13:05',
-                end: '14:10',
-                has_note: 'true'
-            }
-        ]
+        const mongoose = require('mongoose');
 
-        return next();
+        if (!res.locals.currentWeek) 
+        {
+            return next(new Error("Current week data is missing"));
+        }
+
+        const { year, start_date, end_date } = res.locals.currentWeek;
+
+        const filter = req.path.startsWith('/timesheet/save') 
+        ? {} // Load all time entries when saving
+        : { 
+            start: { 
+                $gte: new Date(year, res.locals.currentWeek.start_month, start_date), 
+                $lte: new Date(year, res.locals.currentWeek.start_month, end_date, 23, 59, 59) 
+            } 
+        };
+
+        TimeModel.find(filter)
+        .lean()
+        .then((times) => 
+        {
+            res.locals.times = times;
+
+            res.locals.times.forEach(time => 
+            {
+                const project = res.locals.projects.find(p => p.id.toString() === time.project_name.toString());
+
+                if (project) 
+                {
+                    time.project_name = project.name;
+                }
+            });
+
+            return next();
+        })
+        .catch((err) => next(err));
     };
 };
