@@ -17,6 +17,7 @@ const saveProject = require('./middleware/project/saveProject');
 const delProject = require('./middleware/project/delProject');
 const saveMsg = require('./middleware/common/getMsg');
 const updateTotalTimes = require('./middleware/project/updateTotalTimes');
+const sortProjects = require('./middleware/project/sortProjects');
 
 const TimeModel = require('./models/time');
 const ProjectModel = require('./models/project');
@@ -75,7 +76,6 @@ module.exports = function (app) {
     app.use(
         '/timesheet/add-project',
         getProject(objRepo),
-        //getSelectedWeek(objRepo),
         render(objRepo,'time-project-add')
     );
 
@@ -85,6 +85,7 @@ module.exports = function (app) {
         getPriority(objRepo),
         getStatus(objRepo),
         getProjects(objRepo),
+        sortProjects(objRepo),
         getCurrentWeek(objRepo),
         updateTotalTimes(objRepo),
         render(objRepo, 'project')
