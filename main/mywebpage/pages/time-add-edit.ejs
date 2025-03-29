@@ -41,14 +41,18 @@
                     <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
                     <td class="col-lg-3 mybottomborder">
                         <select class="form-control" id="project-name" name="project_name">
-                            <option value="" disabled>Select a project</option>
+                            <option value="" <% if (typeof time === 'undefined' || !time.project_name) { %> selected <% } %> disabled>
+                                Select a project
+                            </option>
                             <% projects.forEach(project => { %>
                                 <option value="<%= project._id %>" 
-                                    <% if (typeof time !== 'undefined' && time.project_name.toString() === project._id.toString()) { %> selected <% } %>>
+                                    <% if (typeof time !== 'undefined' && time.project_name && time.project_name.toString() === project._id.toString()) { %> 
+                                        selected 
+                                    <% } %>>
                                     <%= project.name %>
                                 </option>
                             <% }) %>
-                        </select>                        
+                        </select>
                     </td>
                 </tr>
                 <tr>

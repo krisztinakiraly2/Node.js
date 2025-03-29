@@ -7,7 +7,7 @@ module.exports = function (objectrepository) {
         const timeId = req.params.timesheetid;    
 
         if (!timeId) {
-            return next(new Error("No time entry ID provided in the URL"));
+            return next();
         }
 
         TimeModel.findById(timeId)

@@ -37,7 +37,7 @@
                     <td class="col-lg-3"></td>
                     <td class="col-lg-3 text-start mybottomborder myrightborder">Status</td>
                     <td class="col-lg-3 mybottomborder">
-                        <select class="form-select" id="status" name="status" required>
+                        <select class="form-select" id="status" name="status">
                             <option value="" disabled selected>Select status</option>
                             <% statuses.forEach(status => { %>
                                 <option value="<%= status.value %>" 
@@ -54,7 +54,7 @@
                     <td class="col-lg-3"></td>
                     <td class="col-lg-3 text-start mybottomborder myrightborder">Priority</td>
                     <td class="col-lg-3 mybottomborder">
-                        <select class="form-select" id="priority" name="priority" required>
+                        <select class="form-select" id="priority" name="priority">
                             <option value="" disabled selected>Select priority</option>
                             <% priorities.forEach(priority => { %>
                                 <option value="<%= priority.value %>" 
@@ -113,4 +113,5 @@
     });
 </script>
 
+<%- include('project-errors') -%>
 <%- include('footer') -%>

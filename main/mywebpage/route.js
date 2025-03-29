@@ -95,6 +95,7 @@ module.exports = function (app) {
         '/project/new',
         getStatus(objRepo),
         getPriority(objRepo),
+        getProjects(objRepo),
         render(objRepo, 'project-add-edit')
     );
         
@@ -103,6 +104,7 @@ module.exports = function (app) {
         getStatus(objRepo),
         getPriority(objRepo),
         getProject(objRepo),
+        getProjects(objRepo),
         render(objRepo, 'project-add-edit')
     );
 

@@ -1,0 +1,126 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () 
+    {
+        // Select form fields for project view
+        const projectName = document.getElementById("project-name");
+        const statusInput = document.getElementById("status");
+        const priorityInput = document.getElementById("priority");
+
+        // Initialize popovers for error messages
+        function initializePopover(input) 
+        {
+            return new bootstrap.Popover(input, { trigger: "manual", container: "body" });
+        }
+
+        const popovers = {
+            projectName: initializePopover(projectName),
+            statusInput: initializePopover(statusInput),
+            priorityInput: initializePopover(priorityInput)
+        };
+
+        // Function to show error message
+        function showError(input, message) 
+        {
+            input.setAttribute("data-bs-content", message);
+
+            // Destroy existing popover instance before showing the new one
+            if (bootstrap.Popover.getInstance(input)) 
+            {
+                bootstrap.Popover.getInstance(input).dispose();
+            }
+
+            popovers[input.id] = initializePopover(input);
+            input.classList.add("is-invalid");
+            popovers[input.id].show();
+        }
+
+        // Function to clear error message
+        function clearError(input) 
+        {
+            input.classList.remove("is-invalid");
+
+            if (bootstrap.Popover.getInstance(input)) 
+            {
+                bootstrap.Popover.getInstance(input).dispose();
+            }
+        }
+
+        // Validation for project name
+        function validateProjectName() 
+        {
+            if (!projectName.value) 
+            {
+                showError(projectName, "Project name is required.");
+                return false;
+            } 
+            else 
+            {
+                clearError(projectName);
+                return true;
+            }
+        }
+
+        // Validation for status
+        function validateStatus() 
+        {
+            if (!statusInput.value) 
+            {
+                showError(statusInput, "Please select a project status.");
+                return false;
+            } 
+            else 
+            {
+                clearError(statusInput);
+                return true;
+            }
+        }
+
+        // Validation for priority
+        function validatePriority() 
+        {
+            if (!priorityInput.value) 
+            {
+                showError(priorityInput, "Please select a project priority.");
+                return false;
+            } 
+            else 
+            {
+                clearError(priorityInput);
+                return true;
+            }
+        }
+
+        // Form submit validation
+        document.querySelector("form").addEventListener("submit", function (event) 
+        {
+            let isValid = true;
+
+            if (!validateProjectName()) 
+            {
+                isValid = false;
+            }
+
+            if (!validateStatus()) 
+            {
+                isValid = false;
+            }
+
+            if (!validatePriority()) 
+            {
+                isValid = false;
+            }
+
+            if (!isValid) 
+            {
+                event.preventDefault();
+            }
+        });
+
+        // Clear error messages on input
+        [projectName, statusInput, priorityInput].forEach(input => 
+        {
+            input.addEventListener("input", () => clearError(input));
+            input.addEventListener("click", () => clearError(input));
+        });
+    });
+</script>
