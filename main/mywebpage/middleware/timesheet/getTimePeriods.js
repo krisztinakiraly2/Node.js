@@ -1,16 +1,12 @@
-// Loads all of the time periods that was made on the 
-// selected week, the connecting project must be added 
-// to the view
-
 module.exports = function (objectrepository) 
 {
     const requireOption = require('../common/requireOption');
     const TimeModel = requireOption(objectrepository, 'TimeModel');
+    const ProjectModel = requireOption(objectrepository, 'ProjectModel');
+    const moment = require('moment');
 
     return function (req, res, next) 
     {
-        const mongoose = require('mongoose');
-
         if (!res.locals.currentWeek) 
         {
             return next(new Error("Current week data is missing"));
@@ -18,33 +14,47 @@ module.exports = function (objectrepository)
 
         const { year, start_date, end_date } = res.locals.currentWeek;
 
+        const startOfWeek = moment(`${year}-${res.locals.currentWeek.start_month + 1}-${start_date}`, "YYYY-MM-DD")
+            .startOf('day')
+            .format("YYYY-MM-DD HH:mm:ss");
+
+        const endOfWeek = moment(`${year}-${res.locals.currentWeek.start_month + 1}-${end_date}`, "YYYY-MM-DD")
+            .endOf('day')
+            .format("YYYY-MM-DD HH:mm:ss");
+
         const filter = req.path.startsWith('/timesheet/save') 
-        ? {} // Load all time entries when saving
-        : { 
-            start: { 
-                $gte: new Date(year, res.locals.currentWeek.start_month, start_date), 
-                $lte: new Date(year, res.locals.currentWeek.start_month, end_date, 23, 59, 59) 
-            } 
-        };
+            ? {} 
+            : { 
+                start: { 
+                    $gte: startOfWeek, 
+                    $lte: endOfWeek
+                } 
+            };
 
         TimeModel.find(filter)
-        .lean()
-        .then((times) => 
-        {
-            res.locals.times = times;
-
-            res.locals.times.forEach(time => 
+            .lean()
+            .then((times) => 
             {
-                const project = res.locals.projects.find(p => p.id.toString() === time.project_name.toString());
+                // Fetch all projects
+                return ProjectModel.find({}).lean().then((projects) => {
+                    // Create a map of projectId to projectName
+                    const projectMap = projects.reduce((map, project) => {
+                        map[project._id.toString()] = project.name; // Assuming 'name' is the project name field
+                        return map;
+                    }, {});
 
-                if (project) 
-                {
-                    time.project_name = project.name;
-                }
-            });
+                    // Map the times to include the project name
+                    times.forEach(time => {
+                        // Replace the project_id with the actual project name
+                        time.project_name = projectMap[time.project_name.toString()] || "Unknown Project";
+                    });
 
-            return next();
-        })
-        .catch((err) => next(err));
+                    // Now pass the resolved times and projects to locals
+                    res.locals.times = times;
+                    res.locals.projects = projects; // For rendering project list if needed
+                    return next();
+                });
+            })
+            .catch((err) => next(err));
     };
 };

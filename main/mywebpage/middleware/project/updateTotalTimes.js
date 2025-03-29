@@ -1,7 +1,7 @@
 // When loading the project page update the total times in db
 
 module.exports = function (objectrepository) 
-{
+    {
     const requireOption = require('../common/requireOption');
     const TimeModel = requireOption(objectrepository, 'TimeModel');
     const ProjectModel = requireOption(objectrepository, 'ProjectModel');
@@ -40,8 +40,6 @@ module.exports = function (objectrepository)
                     const durationMinutes = Math.round((end - start) / (1000 * 60)); // Convert to minutes
                     totalTrackedTime += Math.max(durationMinutes, 0);
                 }
-
-                console.log(`Updating ${project.name}: ${totalTrackedTime} minutes`);
 
                 await ProjectModel.updateOne
                 (

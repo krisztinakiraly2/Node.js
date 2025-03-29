@@ -1,9 +1,10 @@
 // it renders the requested page
 
-module.exports = function (objectrepository, viewName) 
-{
-    return function (req, res) 
-    {
-        res.render(viewName);
+const moment = require("moment-timezone");
+
+module.exports = (objRepo, viewName) => {
+    return (req, res) => {
+        res.locals.moment = moment;
+        res.render(viewName, res.locals);
     };
 };

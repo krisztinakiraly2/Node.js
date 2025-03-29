@@ -14,31 +14,16 @@
     let formattedDate = ''; 
     let startTime = '';
     let endTime = '';
-    
+
     if (typeof time !== 'undefined') {
-        const project = projects.find(p => p._id.toString() === time.project_name.toString());
-        if (project) {
-            time.project_name = project.name;
-        }
-    
-        // Convert to Budapest timezone
-        const options = { timeZone: 'Europe/Budapest', year: 'numeric', month: '2-digit', day: '2-digit' };
-        const startDate = new Date(time.start).toLocaleString('hu-HU', options);
-        const endDate = new Date(time.end).toLocaleString('hu-HU', options);
-    
-        // Format date correctly
-        formattedDate = startDate.replace(/\./g, '').replace(/\s/g, '. '); // "2024. 03. 28."
-    
-        // Format time correctly
-        startTime = new Date(time.start).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Budapest' });
-        endTime = new Date(time.end).toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Budapest' });
-    
-        // Ensure `endTime` is empty if it's an ongoing time entry
-        if (new Date(time.end).getUTCFullYear() === 1900 || isNaN(new Date(time.end).getTime())) {
-            endTime = '';
-        }
+        // Extract date part
+        formattedDate = moment(time.start, "YYYY-MM-DD HH:mm:ss").format("YYYY. MM. DD.");
+
+        // Extract time parts from string
+        startTime = moment(time.start, "YYYY-MM-DD HH:mm:ss").format("HH:mm");
+        endTime = (time.end && time.end !== "1900-01-01 00:00:00") ? moment(time.end, "YYYY-MM-DD HH:mm:ss").format("HH:mm") : '';
     }
-    %>    
+    %>
 
     <form action="/timesheet/save/<%= (typeof time !== 'undefined' && time._id) ? time._id : '' %>" method="POST">
 
@@ -56,10 +41,10 @@
                     <td class="col-lg-3 text-start mybottomborder myrightborder">Project name</td>
                     <td class="col-lg-3 mybottomborder">
                         <select class="form-control" id="project-name" name="project_name">
-                            <option value="" disabled selected>Select a project</option>
+                            <option value="" disabled>Select a project</option>
                             <% projects.forEach(project => { %>
                                 <option value="<%= project._id %>" 
-                                    <% if (typeof time !== 'undefined' && time.project_name === project.name) { %> selected <% } %>>
+                                    <% if (typeof time !== 'undefined' && time.project_name.toString() === project._id.toString()) { %> selected <% } %>>
                                     <%= project.name %>
                                 </option>
                             <% }) %>
@@ -126,8 +111,7 @@
     document.getElementById('delete-button')?.addEventListener('click', function (event) {
         event.preventDefault();
         const timeId = this.getAttribute('data-time-id');
-        if (confirm('Are you sure you want to delete this time entry?')) 
-        {
+        if (confirm('Are you sure you want to delete this time entry?')) {
             window.location.href = '/timesheet/del/' + timeId;
         }
     });
@@ -137,11 +121,8 @@
         theme: "dark",
         dateFormat: "Y. m. d.",
         locale: { firstDayOfWeek: 1 },
-        timeZone: "Europe/Budapest",
-        onClose: function (selectedDates, dateStr) 
-        {
-            if (dateStr) 
-            {
+        onClose: function (selectedDates, dateStr) {
+            if (dateStr) {
                 document.getElementById("date").classList.remove("is-invalid");
                 bootstrap.Popover.getInstance(document.getElementById("date")).hide();
             }
@@ -155,21 +136,10 @@
         noCalendar: true,
         dateFormat: "H:i",
         theme: "dark",
-        onClose: function (selectedDates, timeStr) 
-        {
-            if (timeStr) 
-            {
+        onClose: function (selectedDates, timeStr) {
+            if (timeStr) {
                 document.getElementById("start-time").classList.remove("is-invalid");
                 bootstrap.Popover.getInstance(document.getElementById("start-time")).hide();
-            }
-
-            if (selectedDates.length > 0) 
-            {
-                const localDate = selectedDates[0];
-
-                // Convert local time to UTC for saving
-                const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
-                document.getElementById("end-time").dataset.utcValue = utcDate.toISOString();
             }
         }
     });
@@ -180,7 +150,7 @@
         time_24hr: true,
         noCalendar: true,
         dateFormat: "H:i",
-        theme: "dark",
+        theme: "dark"
     });
 </script>
 

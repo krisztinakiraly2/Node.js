@@ -1,5 +1,3 @@
-// Delete the selected time period
-
 module.exports = function (objectrepository) 
 {
     return function (req, res, next) 
@@ -14,10 +12,6 @@ module.exports = function (objectrepository)
             {
                 return res.redirect('/timesheet?status=time_delete_success');
             })
-                .catch((err) => 
-                {
-                    return next(err);
-                });
-
+            .catch((err) => next(err));
     };
 };

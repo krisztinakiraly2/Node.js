@@ -10,8 +10,8 @@ const Time = db.model
                   type: Schema.Types.ObjectId,
                   ref: 'Project'  
                 },
-            start: Date,
-            end: Date,
+            start: String,
+            end: String,
             notes: String,
         }
     );
