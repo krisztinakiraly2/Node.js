@@ -35,8 +35,6 @@ module.exports = function (objectrepository)
             return res.redirect('/timesheet/' + page);
         }
 
-        console.log(req.body);
-
         // Format date
         const formattedDate = req.body.date.replace(/\./g, '').trim().split(' ').join('-');
         
@@ -63,8 +61,6 @@ module.exports = function (objectrepository)
         {
             fullEndTime = `${formattedDate} ${endTime + ':00'}`;
         }
-
-        console.log(fullStartTime,fullEndTime);
 
         status = 'time_edit_success';
 

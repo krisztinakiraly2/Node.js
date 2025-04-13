@@ -1,14 +1,14 @@
 <% if (typeof successMessage !== 'undefined') { %>
     <div class="alert alert-success" id="successMessage">
         <span class="message-text"><%= successMessage %></span>
-        <button class="close-button" onclick="closeMessage()">X</button>
+        <button class="close-button-success" onclick="closeMessage()">X</button>
     </div>
 <% } %>
 
 <% if (typeof myerror !== 'undefined') { %>
     <div class="alert alert-danger" id="alertMessage">
         <span class="message-text"><%= myerror %></span>
-        <button class="close-button" onclick="closeMessage()">X</button>
+        <button class="close-button-danger" onclick="closeMessage()">X</button>
     </div>
 <% } %>
 
@@ -79,12 +79,22 @@
         margin-right: 10px;  /* Space between text and button */
     }
 
-    .close-button 
+    .close-button-success 
     {
         background: none;
         border: none;
         font-size: 16px;
         color: #155724;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .close-button-danger
+    {
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #571515;
         cursor: pointer;
         font-weight: bold;
     }

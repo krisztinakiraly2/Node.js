@@ -16,11 +16,12 @@ module.exports = function (objectrepository)
 
         const existingProject = res.locals.projects.find(project => project.name.toLowerCase() === req.body.name.toLowerCase());
 
-        // If a project with the same name exists and we're not editing it, prevent creation
-        if (existingProject && (!res.locals.project || res.locals.project._id.toString() !== existingProject._id.toString())) 
-        {
-           return res.redirect(req.get("Referrer") || "/");
-        }
+        if (existingProject && (!res.locals.project || res.locals.project._id.toString() !== existingProject._id.toString())) {
+            req.session.formData = req.body;
+            console.log((req.get("Referrer") || "/") + '?status=project_name_existing');
+            //return res.redirect((req.get("Referrer") || "/") + '?status=project_name_existing');
+            return res.redirect('/project/new?status=project_name_existing');
+        }        
 
         status = res.locals.project ? 'project_edit_success' : 'project_save_success';
 
@@ -54,6 +55,7 @@ module.exports = function (objectrepository)
         res.locals.project.save()
             .then(() => 
             {
+                delete req.session.formData;
                 return res.redirect('/project?status=' + status);
             })
             .catch((err) => 

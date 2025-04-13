@@ -21,6 +21,7 @@ const sortProjects = require('./middleware/project/sortProjects');
 
 const TimeModel = require('./models/time');
 const ProjectModel = require('./models/project');
+const getMsg = require('./middleware/common/getMsg');
 
 module.exports = function (app) {
     const objRepo = 
@@ -91,17 +92,23 @@ module.exports = function (app) {
         render(objRepo, 'project')
     );
         
-    app.use(
+    app.get(
         '/project/new',
         getStatus(objRepo),
+        getMsg(objRepo),
         getPriority(objRepo),
         getProjects(objRepo),
-        render(objRepo, 'project-add-edit')
+        (req, res) => 
+        {
+            const formData = req.session.formData || {};
+            res.render('project-add-edit', { formData: formData });
+        }
     );
         
     app.use(
         '/project/edit/:projectid',
         getStatus(objRepo),
+        getMsg(objRepo),
         getPriority(objRepo),
         getProject(objRepo),
         getProjects(objRepo),
