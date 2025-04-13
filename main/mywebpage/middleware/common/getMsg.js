@@ -14,6 +14,8 @@ module.exports = function (objectrepository)
             case 'time_save_success': res.locals.successMessage = 'Time entry successfully created!'; break;
             case 'time_edit_success': res.locals.successMessage = 'Time entry successfully edited!'; break;
             case 'time_delete_success': res.locals.successMessage = 'Time entry successfully deleted!'; break;
+            case 'time_timer_started': res.locals.successMessage = 'Timer successfully started'; break;
+            case 'time_timer_stopped': res.locals.successMessage = 'Timer successfully stopped'; break;
 
             case 'project_name_existing': res.locals.myerror = "Project name already existing!"; break;
 

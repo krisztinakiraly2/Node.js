@@ -19,7 +19,6 @@ module.exports = function (objectrepository) {
                 // Store the time entry in res.locals so it's available in the EJS template
                 res.locals.time = time;
 
-                console.log("Fetched Time Entry:", time);
                 return next();
             })
             .catch((err) => next(err));

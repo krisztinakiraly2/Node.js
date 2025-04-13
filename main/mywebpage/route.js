@@ -10,6 +10,8 @@ const getTimePeriod = require('./middleware/timesheet/getTimePeriod');
 const getTimePeriods = require('./middleware/timesheet/getTimePeriods');
 const saveTimePeriod = require('./middleware/timesheet/saveTimePeriod');
 const delTimePeriod = require('./middleware/timesheet/delTimePeriod');
+const startTimer = require('./middleware/timesheet/startTimer');
+const stopTimer = require('./middleware/timesheet/stopTimer');
 
 const getProject = require('./middleware/project/getProject');
 const getProjects = require('./middleware/project/getProjects');
@@ -22,6 +24,7 @@ const sortProjects = require('./middleware/project/sortProjects');
 const TimeModel = require('./models/time');
 const ProjectModel = require('./models/project');
 const getMsg = require('./middleware/common/getMsg');
+const getColors = require('./middleware/common/getColors');
 
 module.exports = function (app) {
     const objRepo = 
@@ -64,7 +67,6 @@ module.exports = function (app) {
         getCurrentWeek(objRepo),
         getTimePeriods(objRepo),
         getTimePeriod(objRepo),
-        updateTotalTimes(objRepo),
         saveTimePeriod(objRepo),
     );
 
@@ -75,15 +77,25 @@ module.exports = function (app) {
     );
 
     app.use(
-        '/timesheet/add-project',
+        '/stop_timer/:projectid',
+        getProjects(objRepo),
+        getCurrentWeek(objRepo),
+        getTimePeriods(objRepo),
         getProject(objRepo),
-        render(objRepo,'time-project-add')
+        stopTimer(objRepo),
+    );
+    
+    app.use(
+        '/start_timer/:projectid',
+        getProject(objRepo),
+        startTimer(objRepo),
     );
 
     app.get(
         '/project',
         saveMsg(objRepo),
         getPriority(objRepo),
+        getColors(objRepo),
         getStatus(objRepo),
         getProjects(objRepo),
         sortProjects(objRepo),

@@ -33,7 +33,7 @@ module.exports = function (objectrepository)
                     // Ensure valid start and end dates
                     if (isNaN(start.getTime()) || isNaN(end.getTime()) || end < start) 
                     {
-                        console.warn(`Skipping invalid entry for project ${project.name}`);
+                        //console.warn(`Skipping invalid entry for project ${project.name}`);
                         continue;
                     }
 

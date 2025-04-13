@@ -68,7 +68,7 @@ module.exports = function (objectrepository)
         if (typeof res.locals.time === 'undefined') 
         {
             res.locals.time = new TimeModel();
-            res.locals.time.tracked_time = 0;
+            //res.locals.time.tracked_time = 0;
             status = 'time_save_success';
         }
 

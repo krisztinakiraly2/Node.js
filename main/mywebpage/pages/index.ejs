@@ -101,12 +101,33 @@
             daySums = daySums.map(normalizeDuration);
 
             hasProjects = true;
-
+            const projectMap = {};
+            projects.forEach(p => { projectMap[p.name] = p._id; });
+            const ongoing = timesByProject[projectName]?.some(time => time.end === '1900-01-01 00:00:00');
         %>
 
         <tr>
             <td class="col-lg-4 myth myrightborder mybottomborder">
-                <strong><%= projectName %></strong>
+              <strong style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span><%= projectName %></span>
+                <% if (ongoing) { %>
+                  <!-- Stop button -->
+                  <a href="/stop_timer/<%= projectMap[projectName] %>"  
+                     class="btn" 
+                     style="height: 30px; width: 30px; font-size: 13px; padding: 0; display: flex; justify-content: center; align-items: center;">
+                    <i class="fa-regular fa-circle-stop" style="font-size: 16px;"></i> 
+                  </a>
+                <% } else { %>
+                  <!-- Start button -->
+                  <a href="/start_timer/<%= projectMap[projectName] %>" 
+                     class="btn" 
+                     style="height: 30px; width: 30px; font-size: 13px; padding: 0; display: flex; justify-content: center; align-items: center;">
+                    <i class="fa-regular fa-circle-play" style="font-size: 16px;"></i>
+                  </a>
+                <% } %>
+                  
+              </strong>              
+              
             </td>
             <% daySums.forEach(function(sum, index) { %>
                 <td class="col-lg-1 myth mybottomborder" style="border: none;">
@@ -144,7 +165,7 @@
             <%= moment(time.start, "YYYY-MM-DD HH:mm:ss").format("HH:mm") %> - <%= formattedEndTime %>
           
             <% if(time.notes) { %> 
-              <a href="#" class="note"><i class="fa-solid fa-message"></i></a> 
+              <a class="note"><i class="fa-solid fa-message"></i></a> 
             <% } %>
             </td>          
 
@@ -175,8 +196,8 @@
   </div>
 
   <div class="d-flex gap-2 justify-content-start">
-    <a href="/timesheet/add-project" type="button" class="btn" style="background-color: #756ec7; color: #f1f1f1; margin-top: 8px; margin-left: 12px;" hidden>+ Add project</a>
-    <a href="/timesheet/new" type="button" class="btn" style="background-color: #756ec7; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">+ Add time</a>
+    <a href="/timesheet/add-project" type="button" class="btn mybutton" style=" margin-top: 8px; margin-left: 12px;" hidden>+ Add project</a>
+    <a href="/timesheet/new" type="button" class="btn mybutton" style="margin-top: 8px; margin-left: 12px;">+ Add time</a>
   </div>
 </div>
 

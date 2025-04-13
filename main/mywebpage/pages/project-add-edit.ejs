@@ -71,7 +71,9 @@
                 </tr>
                 <tr>
                     <td class="col-lg-3"></td>
-                    <td class="col-lg-3 text-start mybottomborder myrightborder">Tags</td>
+                    <td class="col-lg-3 text-start mybottomborder myrightborder">
+                        <a title='tags are divided by ","'>Tags <i class="fa-regular fa-circle-question" style="color: #40444e; height: 8px;"></i></a>
+                    </td>
                     <td class="col-lg-3 mybottomborder">
                         <input type="text" class="form-select" id="tags" name="tags" 
                                value="<%= (typeof formData !== 'undefined' && formData.tags) || (typeof project !== 'undefined' ? project.tags.join(', ') : '') %>">
@@ -88,11 +90,11 @@
         </table>
     
         <div class="d-inline-flex gap-1">
-            <button type="submit" class="btn" style="background-color: #53ab50; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Save</button>
-            <a href="/project" type="cancel" class="btn" style="background-color: #68686a; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">Cancel</a>
+            <button type="submit" class="btn savebutton" style="margin-top: 8px; margin-left: 12px;">Save</button>
+            <a href="/project" type="cancel" class="btn cancelbutton" style="margin-top: 8px; margin-left: 12px;">Cancel</a>
             <% if (typeof project === 'undefined') {} else { %>
                 <a href="#" id="delete-button" data-project-id="<%= project._id %>" 
-                   class="btn" style="background-color: #e73e3e; color: #f1f1f1; margin-top: 8px; margin-left: 12px;">
+                   class="btn deletebutton" style="margin-top: 8px; margin-left: 12px;">
                     Delete
                 </a>
             <% } %>        

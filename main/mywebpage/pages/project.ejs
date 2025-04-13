@@ -76,14 +76,15 @@
                 <% if (project.tags && Array.isArray(project.tags) && project.tags.length > 0 && project.tags.some(tag => tag.trim().length > 0)) { %>
                   <% project.tags.forEach((tag) => { %>
                     <% if (tag.trim().length > 0) { %>
-                      <div class="box" style="--color: #82bbd9; --text-color:#122c50; margin-right: 5px;">
+                      <% const color = colors[Math.floor(Math.random() * colors.length)]; %>
+                      <div class="box" style="--color: <%= color.bgcolor %>; --text-color:<%= color.textColor %>; margin-right: 5px;">
                         <%= tag %>
                       </div>
                     <% } %>
                   <% }) %>
                 <% } %>
               </div>
-            </td>           
+            </td>            
 
             </tr>
           <% }) %>
@@ -93,7 +94,7 @@
   </div>
 
   <div class="d-inline-flex fixed-bottom-right">
-    <a href="/project/new" type="button" class="btn" style="background-color: #756ec7; color: #f1f1f1;">+ Add project</a>
+    <a href="/project/new" type="button" class="btn mybutton">+ Add project</a>
   </div>
 
 </div>
