@@ -1,6 +1,5 @@
 const changeRoute = require('./middleware/common/changeRoute');
 const getCurrentWeek = require('./middleware/common/getCurrentWeek');
-const getSelectedWeek = require('./middleware/common/getSelectedWeek');
 const render = require('./middleware/common/render');
 const getStatus = require('./middleware/common/getStatus');
 const getPriority = require('./middleware/common/getPriority');

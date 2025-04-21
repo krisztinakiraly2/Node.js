@@ -1,4 +1,5 @@
-module.exports = function (objectrepository) {
+module.exports = function (objectrepository) 
+{
     const requireOption = require('../common/requireOption');
     const TimeModel = requireOption(objectrepository, 'TimeModel');
 
